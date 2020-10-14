@@ -101,7 +101,9 @@ function BlockList(
 			>
 				<BoxControlVisualizer
 					values={ __experimentalPassedProps.style?.spacing?.padding }
-					showValues={ __experimentalPassedProps.style?.visualizers?.padding }
+					showValues={
+						__experimentalPassedProps.style?.visualizers?.padding
+					}
 				/>
 				{ blockClientIds.map( ( clientId, index ) => {
 					const isBlockInSelection = hasMultiSelection
