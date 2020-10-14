@@ -59,13 +59,6 @@ export const TopView = styled( Side )`
 	right: 0;
 `;
 
-export const MarginTopView = styled( Side )`
-	top: 0;
-	left: 0;
-	right: 0;
-	transform: translateY( -100% );
-`;
-
 export const RightView = styled( Side )`
 	top: 0;
 	bottom: 0;
@@ -76,13 +69,6 @@ export const BottomView = styled( Side )`
 	bottom: 0;
 	left: 0;
 	right: 0;
-`;
-
-export const MarginBottomView = styled( Side )`
-	bottom: 0;
-	left: 0;
-	right: 0;
-	transform: translateY( 100% );
 `;
 
 export const LeftView = styled( Side )`
