@@ -51,7 +51,7 @@ function ColumnsEditContainer( {
 	updateColumns,
 	clientId,
 } ) {
-	const { verticalAlignment } = attributes;
+	const { verticalAlignment, style } = attributes;
 
 	const { count } = useSelect(
 		( select ) => {
@@ -68,6 +68,7 @@ function ColumnsEditContainer( {
 
 	const blockProps = useBlockProps( {
 		className: classes,
+		style,
 	} );
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,

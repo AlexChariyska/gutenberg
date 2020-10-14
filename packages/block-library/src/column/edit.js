@@ -22,7 +22,7 @@ import { useSelect, useDispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 function ColumnEdit( {
-	attributes: { verticalAlignment, width, templateLock = false },
+	attributes: { verticalAlignment, width, style, templateLock = false },
 	setAttributes,
 	clientId,
 } ) {
@@ -57,7 +57,7 @@ function ColumnEdit( {
 
 	const blockProps = useBlockProps( {
 		className: classes,
-		style: width ? { flexBasis: width } : undefined,
+		style: width ? { flexBasis: width, ...style } : { ...style },
 	} );
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
 		templateLock,
