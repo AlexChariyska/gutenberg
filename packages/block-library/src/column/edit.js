@@ -56,7 +56,7 @@ function ColumnEdit( {
 
 	const blockProps = useBlockProps( {
 		className: classes,
-		style: width ? { flexBasis: width,...style } : {...style},
+		style: width ? { flexBasis: width, ...style } : { ...style },
 	} );
 
 	return (

@@ -496,78 +496,71 @@ function CoverEdit( {
 	return (
 		<>
 			{ controls }
-			<div style={ { position: 'relative' } }>
+			<div
+				{ ...blockProps }
+				className={ classnames( classes, blockProps.className ) }
+				style={ { ...style, ...blockProps.style } }
+				data-url={ url }
+			>
 				<BoxControlVisualizer
-					values={ styleAttribute?.spacing?.margin }
-					showValues={ styleAttribute?.visualizers?.margin }
-					type="margin"
+					values={ styleAttribute?.spacing }
+					showValues={ styleAttribute?.visualizers }
 				/>
-				<div
-					{ ...blockProps }
-					className={ classnames( classes, blockProps.className ) }
-					style={ { ...style, ...blockProps.style } }
-					data-url={ url }
-				>
-					<BoxControlVisualizer
-						values={ styleAttribute?.spacing?.padding }
-						showValues={ styleAttribute?.visualizers?.padding }
-					/>
-					<ResizableCover
-						className="block-library-cover__resize-container"
-						onResizeStart={ () => {
-							setAttributes( { minHeightUnit: 'px' } );
-							toggleSelection( false );
+				<ResizableCover
+					className="block-library-cover__resize-container"
+					onResizeStart={ () => {
+						setAttributes( { minHeightUnit: 'px' } );
+						toggleSelection( false );
+					} }
+					onResize={ setTemporaryMinHeight }
+					onResizeStop={ ( newMinHeight ) => {
+						toggleSelection( true );
+						setAttributes( { minHeight: newMinHeight } );
+						setTemporaryMinHeight( null );
+					} }
+					showHandle={ isSelected }
+				/>
+				{ isImageBackground && (
+					// Used only to programmatically check if the image is dark or not
+					<img
+						ref={ isDarkElement }
+						aria-hidden
+						alt=""
+						style={ {
+							display: 'none',
 						} }
-						onResize={ setTemporaryMinHeight }
-						onResizeStop={ ( newMinHeight ) => {
-							toggleSelection( true );
-							setAttributes( { minHeight: newMinHeight } );
-							setTemporaryMinHeight( null );
-						} }
-						showHandle={ isSelected }
+						src={ url }
 					/>
-					{ isImageBackground && (
-						// Used only to programmatically check if the image is dark or not
-						<img
-							ref={ isDarkElement }
-							aria-hidden
-							alt=""
-							style={ {
-								display: 'none',
-							} }
-							src={ url }
-						/>
-					) }
-					{ url && gradientValue && dimRatio !== 0 && (
-						<span
-							aria-hidden="true"
-							className={ classnames(
-								'wp-block-cover__gradient-background',
-								gradientClass
-							) }
-							style={ { background: gradientValue } }
-						/>
-					) }
-					{ isVideoBackground && (
-						<video
-							ref={ isDarkElement }
-							className="wp-block-cover__video-background"
-							autoPlay
-							muted
-							loop
-							src={ url }
-							style={ { objectPosition: positionValue } }
-						/>
-					) }
-					{ isBlogUrl && <Spinner /> }
-					<InnerBlocks
-						__experimentalTagName="div"
-						__experimentalPassedProps={ {
-							className: 'wp-block-cover__inner-container',
-						} }
-						template={ INNER_BLOCKS_TEMPLATE }
+				) }
+				{ url && gradientValue && dimRatio !== 0 && (
+					<span
+						aria-hidden="true"
+						className={ classnames(
+							'wp-block-cover__gradient-background',
+							gradientClass
+						) }
+						style={ { background: gradientValue } }
 					/>
-				</div>
+				) }
+				{ isVideoBackground && (
+					<video
+						ref={ isDarkElement }
+						className="wp-block-cover__video-background"
+						autoPlay
+						muted
+						loop
+						src={ url }
+						style={ { objectPosition: positionValue } }
+					/>
+				) }
+				{ isBlogUrl && <Spinner /> }
+				<InnerBlocks
+					__experimentalTagName="div"
+					__experimentalPassedProps={ {
+						className: 'wp-block-cover__inner-container',
+					} }
+					template={ INNER_BLOCKS_TEMPLATE }
+				/>
 			</div>
 		</>
 	);

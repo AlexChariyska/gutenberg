@@ -49,7 +49,7 @@ export const Side = styled.div`
 	${ ( { transform } ) =>
 		transform &&
 		`
-		transform: translateY(${ transform });
+		transform: ${ transform };
 	` }
 `;
 

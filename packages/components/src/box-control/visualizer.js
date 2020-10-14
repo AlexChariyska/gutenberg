@@ -11,18 +11,26 @@ import {
 	TopView,
 	RightView,
 	BottomView,
-	LeftView
+	LeftView,
 } from './styles/box-control-visualizer-styles';
-import { DEFAULT_VALUES, DEFAULT_VISUALIZER_VALUES } from './utils';
+import {
+	DEFAULT_VISUALIZER_VALUES,
+	DEFAULT_VISUALIZER_VALUES_COMPOUND,
+	DEFAULT_VALUES_COMPOUND,
+} from './utils';
 
 export default function BoxControlVisualizer( {
 	children,
-	showValues = DEFAULT_VISUALIZER_VALUES,
-	values: valuesProp = DEFAULT_VALUES,
-	type,
+	showValues = DEFAULT_VISUALIZER_VALUES_COMPOUND,
+	values,
 	...props
 } ) {
 	const isPositionAbsolute = ! children;
+	const valuesProp = { ...DEFAULT_VALUES_COMPOUND, ...values };
+	const marginProps = showValues && showValues.margin;
+	const isMarginVisualizer =
+		marginProps && Object.values( marginProps ).filter( Boolean ).length;
+
 	return (
 		<Container
 			{ ...props }
@@ -30,33 +38,53 @@ export default function BoxControlVisualizer( {
 			aria-hidden="true"
 		>
 			<Sides
-				showValues={ showValues }
-				values={ valuesProp }
-				type={ type }
+				showValues={
+					isMarginVisualizer ? showValues.margin : showValues.padding
+				}
+				values={
+					isMarginVisualizer ? valuesProp.margin : valuesProp.padding
+				}
+				setTransformStyle={ isMarginVisualizer }
 			/>
 			{ children }
 		</Container>
 	);
 }
 
-function Sides( { showValues = DEFAULT_VISUALIZER_VALUES, values, type } ) {
+function Sides( {
+	showValues = DEFAULT_VISUALIZER_VALUES,
+	values,
+	setTransformStyle,
+} ) {
 	const { top, right, bottom, left } = values;
 
 	return (
 		<>
-			<Top isVisible={ showValues.top } value={ top } type={ type } />
-			<Right isVisible={ showValues.right } value={ right } />
+			<Top
+				isVisible={ showValues.top }
+				value={ top }
+				setTransformStyle={ setTransformStyle }
+			/>
+			<Right
+				isVisible={ showValues.right }
+				value={ right }
+				setTransformStyle={ setTransformStyle }
+			/>
 			<Bottom
 				isVisible={ showValues.bottom }
 				value={ bottom }
-				type={ type }
+				setTransformStyle={ setTransformStyle }
 			/>
-			<Left isVisible={ showValues.left } value={ left } />
+			<Left
+				isVisible={ showValues.left }
+				value={ left }
+				setTransformStyle={ setTransformStyle }
+			/>
 		</>
 	);
 }
 
-function Top( { isVisible = false, value, type } ) {
+function Top( { isVisible = false, value, setTransformStyle } ) {
 	const height = value;
 	const animationProps = useSideAnimation( height );
 	const isActive = animationProps.isActive || isVisible;
@@ -64,20 +92,26 @@ function Top( { isVisible = false, value, type } ) {
 		<TopView
 			isActive={ isActive }
 			style={ { height } }
-			transform={ type ? '-100%' : null }
+			transform={ setTransformStyle ? 'translateY(-100%)' : null }
 		/>
 	);
 }
 
-function Right( { isVisible = false, value } ) {
+function Right( { isVisible = false, value, setTransformStyle } ) {
 	const width = value;
 	const animationProps = useSideAnimation( width );
 	const isActive = animationProps.isActive || isVisible;
 
-	return <RightView isActive={ isActive } style={ { width } } />;
+	return (
+		<RightView
+			isActive={ isActive }
+			style={ { width } }
+			transform={ setTransformStyle ? 'translateX(100%)' : null }
+		/>
+	);
 }
 
-function Bottom( { isVisible = false, value, type } ) {
+function Bottom( { isVisible = false, value, setTransformStyle } ) {
 	const height = value;
 	const animationProps = useSideAnimation( height );
 	const isActive = animationProps.isActive || isVisible;
@@ -85,17 +119,23 @@ function Bottom( { isVisible = false, value, type } ) {
 		<BottomView
 			isActive={ isActive }
 			style={ { height } }
-			transform={ type ? '100%' : null }
+			transform={ setTransformStyle ? 'translateY(100%)' : null }
 		/>
 	);
 }
 
-function Left( { isVisible = false, value } ) {
+function Left( { isVisible = false, value, setTransformStyle } ) {
 	const width = value;
 	const animationProps = useSideAnimation( width );
 	const isActive = animationProps.isActive || isVisible;
 
-	return <LeftView isActive={ isActive } style={ { width } } />;
+	return (
+		<LeftView
+			isActive={ isActive }
+			style={ { width } }
+			transform={ setTransformStyle ? 'translateX(-100%)' : null }
+		/>
+	);
 }
 
 /**

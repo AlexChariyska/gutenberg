@@ -16,7 +16,7 @@ export const SPACING_SUPPORT_KEY = 'spacing';
 
 const hasPaddingSupport = ( blockName ) => {
 	const spacingSupport = getBlockSupport( blockName, SPACING_SUPPORT_KEY );
-	return spacingSupport && spacingSupport.padding !== false;
+	return spacingSupport && spacingSupport.padding;
 };
 
 /**

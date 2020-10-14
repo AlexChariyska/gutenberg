@@ -15,7 +15,7 @@ import { SPACING_SUPPORT_KEY } from './padding';
 
 const hasMarginSupport = ( blockName ) => {
 	const spacingSupport = getBlockSupport( blockName, SPACING_SUPPORT_KEY );
-	return spacingSupport && spacingSupport.margin !== false;
+	return spacingSupport && spacingSupport.margin;
 };
 
 /**

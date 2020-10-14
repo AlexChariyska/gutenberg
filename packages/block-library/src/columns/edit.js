@@ -65,7 +65,7 @@ function ColumnsEditContainer( {
 
 	const blockProps = useBlockProps( {
 		className: classes,
-		style
+		style,
 	} );
 
 	return (
