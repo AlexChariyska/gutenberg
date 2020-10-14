@@ -45,12 +45,25 @@ export const Side = styled.div`
 		`
 		opacity: 0.3;
 	` }
+
+	${ ( { transform } ) =>
+		transform &&
+		`
+		transform: translateY(${ transform });
+	` }
 `;
 
 export const TopView = styled( Side )`
 	top: 0;
 	left: 0;
 	right: 0;
+`;
+
+export const MarginTopView = styled( Side )`
+	top: 0;
+	left: 0;
+	right: 0;
+	transform: translateY( -100% );
 `;
 
 export const RightView = styled( Side )`
@@ -63,6 +76,13 @@ export const BottomView = styled( Side )`
 	bottom: 0;
 	left: 0;
 	right: 0;
+`;
+
+export const MarginBottomView = styled( Side )`
+	bottom: 0;
+	left: 0;
+	right: 0;
+	transform: translateY( 100% );
 `;
 
 export const LeftView = styled( Side )`

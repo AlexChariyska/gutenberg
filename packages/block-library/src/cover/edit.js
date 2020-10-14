@@ -496,71 +496,78 @@ function CoverEdit( {
 	return (
 		<>
 			{ controls }
-			<div
-				{ ...blockProps }
-				className={ classnames( classes, blockProps.className ) }
-				style={ { ...style, ...blockProps.style } }
-				data-url={ url }
-			>
+			<div style={ { position: 'relative' } }>
 				<BoxControlVisualizer
-					values={ styleAttribute?.spacing?.padding }
-					showValues={ styleAttribute?.visualizers?.padding }
+					values={ styleAttribute?.spacing?.margin }
+					showValues={ styleAttribute?.visualizers?.margin }
+					type="margin"
 				/>
-				<ResizableCover
-					className="block-library-cover__resize-container"
-					onResizeStart={ () => {
-						setAttributes( { minHeightUnit: 'px' } );
-						toggleSelection( false );
-					} }
-					onResize={ setTemporaryMinHeight }
-					onResizeStop={ ( newMinHeight ) => {
-						toggleSelection( true );
-						setAttributes( { minHeight: newMinHeight } );
-						setTemporaryMinHeight( null );
-					} }
-					showHandle={ isSelected }
-				/>
-				{ isImageBackground && (
-					// Used only to programmatically check if the image is dark or not
-					<img
-						ref={ isDarkElement }
-						aria-hidden
-						alt=""
-						style={ {
-							display: 'none',
+				<div
+					{ ...blockProps }
+					className={ classnames( classes, blockProps.className ) }
+					style={ { ...style, ...blockProps.style } }
+					data-url={ url }
+				>
+					<BoxControlVisualizer
+						values={ styleAttribute?.spacing?.padding }
+						showValues={ styleAttribute?.visualizers?.padding }
+					/>
+					<ResizableCover
+						className="block-library-cover__resize-container"
+						onResizeStart={ () => {
+							setAttributes( { minHeightUnit: 'px' } );
+							toggleSelection( false );
 						} }
-						src={ url }
+						onResize={ setTemporaryMinHeight }
+						onResizeStop={ ( newMinHeight ) => {
+							toggleSelection( true );
+							setAttributes( { minHeight: newMinHeight } );
+							setTemporaryMinHeight( null );
+						} }
+						showHandle={ isSelected }
 					/>
-				) }
-				{ url && gradientValue && dimRatio !== 0 && (
-					<span
-						aria-hidden="true"
-						className={ classnames(
-							'wp-block-cover__gradient-background',
-							gradientClass
-						) }
-						style={ { background: gradientValue } }
+					{ isImageBackground && (
+						// Used only to programmatically check if the image is dark or not
+						<img
+							ref={ isDarkElement }
+							aria-hidden
+							alt=""
+							style={ {
+								display: 'none',
+							} }
+							src={ url }
+						/>
+					) }
+					{ url && gradientValue && dimRatio !== 0 && (
+						<span
+							aria-hidden="true"
+							className={ classnames(
+								'wp-block-cover__gradient-background',
+								gradientClass
+							) }
+							style={ { background: gradientValue } }
+						/>
+					) }
+					{ isVideoBackground && (
+						<video
+							ref={ isDarkElement }
+							className="wp-block-cover__video-background"
+							autoPlay
+							muted
+							loop
+							src={ url }
+							style={ { objectPosition: positionValue } }
+						/>
+					) }
+					{ isBlogUrl && <Spinner /> }
+					<InnerBlocks
+						__experimentalTagName="div"
+						__experimentalPassedProps={ {
+							className: 'wp-block-cover__inner-container',
+						} }
+						template={ INNER_BLOCKS_TEMPLATE }
 					/>
-				) }
-				{ isVideoBackground && (
-					<video
-						ref={ isDarkElement }
-						className="wp-block-cover__video-background"
-						autoPlay
-						muted
-						loop
-						src={ url }
-						style={ { objectPosition: positionValue } }
-					/>
-				) }
-				{ isBlogUrl && <Spinner /> }
-				<InnerBlocks
-					__experimentalTagName="div"
-					__experimentalPassedProps={ {
-						className: 'wp-block-cover__inner-container',
-					} }
-					template={ INNER_BLOCKS_TEMPLATE }
-				/>
+				</div>
 			</div>
 		</>
 	);
