@@ -15,9 +15,9 @@ import { SPACING_SUPPORT_KEY } from './padding';
 
 const UNITS = [
 	{ value: '%', label: '%', default: '' },
-	{ value: 'px', label: 'px', default: '' },
-	{ value: 'em', label: 'em', default: '' },
-	{ value: 'rem', label: 'rem', default: '' },
+	{ value: 'px', label: 'px', default: 30 },
+	{ value: 'em', label: 'em', default: 10 },
+	{ value: 'rem', label: 'rem', default: 20 },
 	{ value: 'vw', label: 'vw', default: '' },
 ];
 
@@ -80,12 +80,12 @@ export function MarginEdit( props ) {
 		web: (
 			<>
 				<BoxControl
+					type="margin"
 					values={ style?.spacing?.margin }
 					onChange={ onChange }
 					onChangeShowVisualizer={ onChangeShowVisualizer }
 					label={ __( 'Margin' ) }
 					units={ units }
-					canAcceptAutoValue
 				/>
 			</>
 		),
